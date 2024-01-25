@@ -1,0 +1,7 @@
+com\chatBot\dto\ChatGptResponse$Choice.class
+com\chatBot\ChatgptBotApplication.class
+com\chatBot\dto\ChatGPTRequest.class
+com\chatBot\dto\Message.class
+com\chatBot\controller\CustomBotController.class
+com\chatBot\config\OpenAIConfig.class
+com\chatBot\dto\ChatGptResponse.class
