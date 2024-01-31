@@ -3,6 +3,8 @@ package com.chatBot.controller;
 
 
 import java.io.IOException;
+import java.util.List;
+
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.text.PDFTextStripper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +36,18 @@ public class LawController {
              .message("Data Saved Sucessfully").tag("saveFormData").build());
  }
 
+ @PostMapping("/fetchLawData")
+	public ResponseEntity<APIResponseDTO> getDataByIpcSection(@RequestBody LawDataRequestDTO lawDataRequestDTO) {
+		List<LawData> lawDataList = lawServiceImpl.getDataByIpcSection(lawDataRequestDTO);
+		APIResponseDTO response = lawDataList.isEmpty()
+				? APIResponseDTO.builder().status(0)
+						.message("No data found for ipcSection " + lawDataRequestDTO.getIpcSection())
+						.tag("fetchLawData").build()
+				: APIResponseDTO.builder().status(1).data(lawDataList).message("Data fetched successfully")
+						.tag("fetchLawData").build();
+		return ResponseEntity.ok().body(response);
+	}
+ 
  @PostMapping("/saveFromPdf")
  public ResponseEntity<APIResponseDTO> saveFromPdf(@RequestBody MultipartFile pdfFile) throws IOException {
      if (pdfFile == null || pdfFile.isEmpty()) {
